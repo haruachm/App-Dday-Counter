@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
+import "package:flutter/material.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,49 +12,85 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color(0xfff3e0e6),
-        body: SafeArea(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: _DayPart(),
+      backgroundColor: Color(0xffffa3bc),
+      body: SafeArea(
+        bottom: false,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              _dayPart(),
+              _dayPicturePart(),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
-class _DayPart extends StatelessWidget {
-  const _DayPart({super.key});
+class _dayPart extends StatelessWidget {
+  const _dayPart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'Minsu 💌 Yunghui',
-          style:
-              TextStyle(fontFamily: 'Cookie', fontSize: 50, color: Colors.pink),
-        ),
-        Text(
-          '우리의 사랑이 시작된',
-          style: TextStyle(fontFamily: 'HiMelody', fontSize: 30),
-        ),
-        Text('2022. 12. 22',
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            'I Love You',
             style: TextStyle(
-              fontFamily: 'HiMelody',
-              fontSize: 30,
-            )),
-        IconButton(
-          iconSize: 60,
-          onPressed: () {},
-          icon: Icon(Icons.favorite),
-          color: Colors.red,
-        ),
-        Text('D+365',
-            style: TextStyle(
-              fontFamily: 'HiMelody',
+              color: Colors.white,
+              fontFamily: 'Cookie',
               fontSize: 70,
-            )),
-      ],
+            ),
+          ),
+          Column(
+            children: [
+              Text(
+                '우리의 사랑이 시작된',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'HiMelody',
+                  fontSize: 30,
+                ),
+              ),
+              Text(
+                '2022.12.22',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'HiMelody',
+                  fontSize: 30,
+                ),
+              ),
+            ],
+          ),
+          IconButton(
+            iconSize: 50,
+            color: Colors.red,
+            onPressed: () {},
+            icon: Icon(Icons.favorite),
+          ),
+          Text(
+            'D+365',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'HiMelody',
+              fontSize: 60,
+            ),
+          ),
+        ],
+      ),
     );
+  }
+}
+
+class _dayPicturePart extends StatelessWidget {
+  const _dayPicturePart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Image.asset('asset/img/couple_picture.jpg'));
   }
 }
