@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 
 class HomeScreen extends StatefulWidget {
@@ -69,7 +70,24 @@ class _dayPart extends StatelessWidget {
           IconButton(
             iconSize: 50,
             color: Colors.red,
-            onPressed: () {},
+            onPressed: () {
+              showCupertinoDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (BuildContext context) {
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                        color: Colors.white,
+                        height: 300,
+                        child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.date,
+                          onDateTimeChanged: (DateTime date) {},
+                        )),
+                  );
+                },
+              );
+            },
             icon: Icon(Icons.favorite),
           ),
           Text(
