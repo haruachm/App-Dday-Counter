@@ -38,10 +38,16 @@ class _dayPart extends StatefulWidget {
 }
 
 class _dayPartState extends State<_dayPart> {
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
 
   @override
   Widget build(BuildContext context) {
+    final now = DateTime.now();
+
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -102,7 +108,11 @@ class _dayPartState extends State<_dayPart> {
             icon: Icon(Icons.favorite),
           ),
           Text(
-            'D+${DateTime.now().subtract(Duration(days: 1))}',
+            'D+${DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                ).difference(selectedDate).inDays + 1}',
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'HiMelody',
