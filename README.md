@@ -1,6 +1,8 @@
 # Couple D-Day APP
 ![image](https://user-images.githubusercontent.com/85959639/218298110-53fbfdeb-698e-47c7-8ff3-60817d958977.png)
 
+![https://blog.kakaocdn.net/dn/nAamu/btrY1l464on/wQvUyMeoyFLy0uAgZozHkK/img.gif](https://blog.kakaocdn.net/dn/nAamu/btrY1l464on/wQvUyMeoyFLy0uAgZozHkK/img.gif)
+
 </br>
 
 ---
