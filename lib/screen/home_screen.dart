@@ -10,6 +10,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  DateTime selectedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              _dayPart(),
+              _dayPart(
+                selectedDate: selectedDate,
+                onPressed: onHeartPressed, // 아래에 함수 따로 정의해서 한눈에 보이도록
+              ),
               _dayPicturePart(),
             ],
           ),
@@ -28,21 +36,47 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  onHeartPressed() {
+    final DateTime now = DateTime.now();
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+              color: Colors.white,
+              height: 300,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: selectedDate,
+                maximumDate: DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                ),
+                onDateTimeChanged: (DateTime date) {
+                  setState(() {
+                    selectedDate = date;
+                  });
+                },
+              )),
+        );
+      },
+    );
+  }
 }
 
-class _dayPart extends StatefulWidget {
-  const _dayPart({super.key});
+class _dayPart extends StatelessWidget {
+  final DateTime selectedDate;
+  final VoidCallback onPressed; //onPressed 부분 외부의 상위위젯에서 받아오기
 
-  @override
-  State<_dayPart> createState() => _dayPartState();
-}
-
-class _dayPartState extends State<_dayPart> {
-  DateTime selectedDate = DateTime(
-    DateTime.now().year,
-    DateTime.now().month,
-    DateTime.now().day,
-  );
+  _dayPart({
+    required this.selectedDate,
+    required this.onPressed, //onPressed 부분 받아오기
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,34 +117,7 @@ class _dayPartState extends State<_dayPart> {
           IconButton(
             iconSize: 50,
             color: Colors.red,
-            onPressed: () {
-              showCupertinoDialog(
-                context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                        color: Colors.white,
-                        height: 300,
-                        child: CupertinoDatePicker(
-                          mode: CupertinoDatePickerMode.date,
-                          initialDateTime: selectedDate,
-                          maximumDate: DateTime(
-                            now.year,
-                            now.month,
-                            now.day,
-                          ),
-                          onDateTimeChanged: (DateTime date) {
-                            setState(() {
-                              selectedDate = date;
-                            });
-                          },
-                        )),
-                  );
-                },
-              );
-            },
+            onPressed: onPressed, //외부에서 onPressed 받아오기
             icon: Icon(Icons.favorite),
           ),
           Text(
