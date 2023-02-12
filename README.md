@@ -13,13 +13,13 @@
 
 아래의 코드를 사용해 디바이스 가로크기에 해당하는 부분을 모두 사용한다.
 
-```
+```dart
 width: MediaQuery.of(context).size.width,
 ```
 
 ![https://blog.kakaocdn.net/dn/Cy7vJ/btrYSNotpIP/nKbx19C3FbCF8czskcsB80/img.png](https://blog.kakaocdn.net/dn/Cy7vJ/btrYSNotpIP/nKbx19C3FbCF8czskcsB80/img.png)
 
-```
+```dart
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 ![https://blog.kakaocdn.net/dn/bMp3BX/btrYSOVgwIl/wWaWQX0KqkJnnBVSLcLHV1/img.png](https://blog.kakaocdn.net/dn/bMp3BX/btrYSOVgwIl/wWaWQX0KqkJnnBVSLcLHV1/img.png)
 
-```
+```dart
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 ![https://blog.kakaocdn.net/dn/cqS037/btrYRQF20bv/JAcCeBBuvikjy0iimHKor0/img.png](https://blog.kakaocdn.net/dn/cqS037/btrYRQF20bv/JAcCeBBuvikjy0iimHKor0/img.png)
 
-```
+```dart
 backgroundColor: Color(0xfff59db5),
 ```
 
@@ -87,7 +87,7 @@ backgroundColor: Color(0xfff59db5),
 
 ![https://blog.kakaocdn.net/dn/cQJGgb/btrYSq77qUP/7kVd65C1qRv9CLlKDT6tdK/img.png](https://blog.kakaocdn.net/dn/cQJGgb/btrYSq77qUP/7kVd65C1qRv9CLlKDT6tdK/img.png)
 
-```
+```dart
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 '**_dayPart()**'를 새로 생성해 작성해주었다.
 
-```
+```dart
 import "package:flutter/material.dart";
 
 class HomeScreen extends StatefulWidget {
@@ -237,7 +237,7 @@ class _dayPart extends StatelessWidget {
 
 ![https://blog.kakaocdn.net/dn/OCqY6/btrYT9dpjCk/LK7XqZCFaJqt6eQGgOFr30/img.png](https://blog.kakaocdn.net/dn/OCqY6/btrYT9dpjCk/LK7XqZCFaJqt6eQGgOFr30/img.png)
 
-```
+```dart
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
@@ -269,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 이는 개발자 모드이기 때문에 나타나는 것이지, 실제로 배포했을 때는 노란 줄무늬는 뜨지 않는다.
 
-```
+```dart
 A RenderFlex overflowed by 403 pixels on the bottom.
 ```
 
@@ -281,11 +281,11 @@ A RenderFlex overflowed by 403 pixels on the bottom.
 
 ### **Expanded 사용하기**
 
-```
+```dart
 Expanded(child: Image.asset('asset/img/couple_picture.jpg')),
 ```
 
-```
+```dart
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
@@ -311,14 +311,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
 ## **'_dayPicturePart()'로 위젯 코드 분리하기**
 
-```
+```dart
 children: [
               _dayPart(),
               _dayPicturePart(),
             ],
 ```
 
-```
+```dart
 class _dayPicturePart extends StatelessWidget {
   const _dayPicturePart({super.key});
 
@@ -347,13 +347,13 @@ mainAxisAlignment
 
 ### **mainAxisAlignment 위젯들 간의 간격 조절**
 
-```
+```dart
 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 ```
 
 ### **위젯을 Column으로 묶어 위젯들 간의 간격 조절**
 
-```
+```dart
     	Column(
             children: [
               Text(
