@@ -498,7 +498,7 @@ initialDateTime: selectedDate,
 - 생성자에 들어갈 데이터를 상위 위젯에서 _dayPart()를 부를 때 **매개변수로** 넣어준다.
 - 상위 위젯에서는 **데이터를 공유하는 동작**을 onHeartPressed()라는 **따로 함수**를 만들어 코드를 보기 쉽게 작성한다.
 
-```
+```dart
 // ignore_for_file: prefer_const_constructors
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
