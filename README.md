@@ -376,3 +376,109 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           ),
 ```
 
+</br> 
+
+### **CupertinoDatePicker(), iOS 스타일의 날짜 선택 띄우기**
+
+- **CupertinoDatePicker()**를 사용하고, mode를 **CupertinoDatePickerMode.date**로 설정해 시간이 아닌 날짜를 선택하도록한다.
+- **onDateTimeChanged:** 는 날짜가 변경되었을 때 실행할 함수를 넣으면 되는데, DateTime 값을 반환한다.
+
+![https://blog.kakaocdn.net/dn/cjc3Cb/btrYY76Zqrx/gIr07VMnOJtqoiv0VL4Ovk/img.png](https://blog.kakaocdn.net/dn/cjc3Cb/btrYY76Zqrx/gIr07VMnOJtqoiv0VL4Ovk/img.png)
+
+디데이 앱 만들기 프로젝트
+
+### **SetState() : 변경된 값 받아오기**
+
+- **selectedDate**라는 변수를 선언한다.
+- **onDateTimeChanged** 부분에서 setState() 함수 안에 받아온 date 값을 넣어준다.
+
+```
+DateTime selectedDate = DateTime.now();
+
+onDateTimeChanged: (DateTime date) {
+                            setState(() {
+                              selectedDate = date;
+                            });
+                          },
+```
+
+---
+
+### **선택한 날짜로 위젯 변경하기**
+
+### **전체 날짜 부분 변경하기**
+
+- 위의 링크에서 알려준 날짜를 가져오는 방법을 참고해, Text 위젯 부분을 받아온 날짜로 변경해준다.
+
+![https://blog.kakaocdn.net/dn/b2H8Sp/btrYSkAk62r/gmTYa87m14pkooi1wSxYrk/img.png](https://blog.kakaocdn.net/dn/b2H8Sp/btrYSkAk62r/gmTYa87m14pkooi1wSxYrk/img.png)
+
+```
+Text(
+                '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'HiMelody',
+                  fontSize: 30,
+                ),
+              ),
+```
+
+## **Date 설정에 따라 변경되는 날짜, 그러나 에러사항 있음※**
+
+- 아래의 화면에서 보이는 바와 같이 달력의 숫자를 변경하면 선택한 날짜와 디데이가 변경된다.
+- 그러나 현재의 날짜보다 앞서간 날짜를 선택했을 때 **'-숫자'**가 나타나면서 디데이 앱에서는 허용되면 안 되는 값이 나타난다.
+- 해당 부분의 **최대 허용 범위 날짜를 설정하고, 초기의 날짜를 지정**해줘야 한다.
+
+![https://blog.kakaocdn.net/dn/BeJXx/btrYTMJGNgl/d5OmRexC5K0CIS6mOL0MA1/img.gif](https://blog.kakaocdn.net/dn/BeJXx/btrYTMJGNgl/d5OmRexC5K0CIS6mOL0MA1/img.gif)
+
+디데이 앱 만들기 - 날짜 지정하기
+
+---
+
+### **디데이 허용 범위 넘어가는 에러 해결**
+
+### **maximumDate : 최대 허용 날짜 지정**
+
+- DataTime.now() 가 자주 쓰이므로 **변수**로 선언해 사용한다.
+- **maximumDate:** 최대 허용 범위를 현재의 날짜의 년, 월, 일로 지정한다.
+
+### **maximumDate 오류**
+
+- 그러나 maximumDate만을 사용해 최대 허용 날짜를 지정하면 아래와 같은 **오류**가 뜬다.
+- 그 이유는 CupertinoDatePicker는 앱을 실행할 때 현재의 날짜를 초기 날짜로 설정해서 앱이 실행되는데, 최대 날짜를 현재의 년, 월, 일로 설정하니까 **분, 초에 해당하는 범위는 벗어나게 된다.** 그렇기 때문에 초기 날짜를 지정해주면 된다.
+
+![https://blog.kakaocdn.net/dn/bG842n/btrYSN3k7CW/iEi2dZub3ib062lAOZZy91/img.png](https://blog.kakaocdn.net/dn/bG842n/btrYSN3k7CW/iEi2dZub3ib062lAOZZy91/img.png)
+
+```
+final now = DateTime.now();
+
+child: CupertinoDatePicker(
+                          mode: CupertinoDatePickerMode.date,
+                          maximumDate: DateTime(
+                            now.year,
+                            now.month,
+                            now.day,
+                          ),
+                          onDateTimeChanged: (DateTime date) {
+                            setState(() {
+                              selectedDate = date;
+                            });
+                          },
+                        )),
+```
+
+---
+
+### **initialDateTime 초기 날짜 설정하기**
+
+초기의 날짜를 설정함으로써 maximumDate를 사용할 수 있게 한다.
+
+```
+initialDateTime: selectedDate,
+```
+
+그러면 아래와 같이 미래의 날짜를 설정하려고 할 때 넘어가지 않고 다시 원래의 날짜로 되돌아오는 것을 확인할 수 있다.
+
+![https://blog.kakaocdn.net/dn/nAamu/btrY1l464on/wQvUyMeoyFLy0uAgZozHkK/img.gif](https://blog.kakaocdn.net/dn/nAamu/btrY1l464on/wQvUyMeoyFLy0uAgZozHkK/img.gif)
+
+디데이 앱 만들기 - 날짜 지정하기
