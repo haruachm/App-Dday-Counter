@@ -484,3 +484,167 @@ initialDateTime: selectedDate,
 ![https://blog.kakaocdn.net/dn/nAamu/btrY1l464on/wQvUyMeoyFLy0uAgZozHkK/img.gif](https://blog.kakaocdn.net/dn/nAamu/btrY1l464on/wQvUyMeoyFLy0uAgZozHkK/img.gif)
 
 디데이 앱 만들기 - 날짜 지정하기
+
+</br>
+
+---
+
+## **※추가) 최종 디데이앱 코드 최적화 - 상태(State) 관리**
+
+- 데이터를 공유해야 하는 부분을 **데이터 흐름에 맞게 관리**하기 위해 코드 최적화를 해준다.
+    - 부모 클래스 => 자식클래스로의 데이터 흐름
+- **onPressed**에 StatefulWidget을 사용해야 하는 코드를 상위 위젯으로 빼서 모두 함께 관리할 수 있도록 한다.
+- selectedDate와 onPressed에 해당하는 부분을 **생성자**로 작성해 상위 위젯에서 받아오도록 한다.
+- 생성자에 들어갈 데이터를 상위 위젯에서 _dayPart()를 부를 때 **매개변수로** 넣어준다.
+- 상위 위젯에서는 **데이터를 공유하는 동작**을 onHeartPressed()라는 **따로 함수**를 만들어 코드를 보기 쉽게 작성한다.
+
+```
+// ignore_for_file: prefer_const_constructors
+import 'package:flutter/cupertino.dart';
+import "package:flutter/material.dart";
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  DateTime selectedDate = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day,
+  );
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xffffa3bc),
+      body: SafeArea(
+        bottom: false,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              _dayPart(
+                selectedDate: selectedDate,
+                onPressed: onHeartPressed, // 아래에 함수 따로 정의해서 한눈에 보이도록
+              ),
+              _dayPicturePart(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  onHeartPressed() {
+    final DateTime now = DateTime.now();
+    showCupertinoDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+              color: Colors.white,
+              height: 300,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: selectedDate,
+                maximumDate: DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                ),
+                onDateTimeChanged: (DateTime date) {
+                  setState(() {
+                    selectedDate = date;
+                  });
+                },
+              )),
+        );
+      },
+    );
+  }
+}
+
+class _dayPart extends StatelessWidget {
+  final DateTime selectedDate;
+  final VoidCallback onPressed; //onPressed 부분 외부의 상위위젯에서 받아오기
+
+  _dayPart({
+    required this.selectedDate,
+    required this.onPressed, //onPressed 부분 받아오기
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final now = DateTime.now();
+
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            'I Love You',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'Cookie',
+              fontSize: 70,
+            ),
+          ),
+          Column(
+            children: [
+              Text(
+                '우리의 사랑이 시작된',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'HiMelody',
+                  fontSize: 30,
+                ),
+              ),
+              Text(
+                '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'HiMelody',
+                  fontSize: 30,
+                ),
+              ),
+            ],
+          ),
+          IconButton(
+            iconSize: 50,
+            color: Colors.red,
+            onPressed: onPressed, //외부에서 onPressed 받아오기
+            icon: Icon(Icons.favorite),
+          ),
+          Text(
+            'D+${DateTime(
+                  now.year,
+                  now.month,
+                  now.day,
+                ).difference(selectedDate).inDays + 1}',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'HiMelody',
+              fontSize: 60,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _dayPicturePart extends StatelessWidget {
+  const _dayPicturePart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(child: Image.asset('asset/img/couple_picture.jpg'));
+  }
+}
+```
