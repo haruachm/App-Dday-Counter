@@ -46,6 +46,7 @@ class _dayPartState extends State<_dayPart> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final now = DateTime.now();
 
     return Expanded(
@@ -54,29 +55,15 @@ class _dayPartState extends State<_dayPart> {
         children: [
           Text(
             'I Love You',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Cookie',
-              fontSize: 70,
-            ),
+            style: theme.textTheme.headline1,
           ),
           Column(
             children: [
               Text(
                 '우리의 사랑이 시작된',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'HiMelody',
-                  fontSize: 30,
-                ),
               ),
               Text(
                 '${selectedDate.year}.${selectedDate.month}.${selectedDate.day}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'HiMelody',
-                  fontSize: 30,
-                ),
               ),
             ],
           ),
@@ -119,11 +106,6 @@ class _dayPartState extends State<_dayPart> {
                   now.month,
                   now.day,
                 ).difference(selectedDate).inDays + 1}',
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'HiMelody',
-              fontSize: 60,
-            ),
           ),
         ],
       ),
