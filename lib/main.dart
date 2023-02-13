@@ -15,7 +15,7 @@ void main() {
           ),
           headline2: TextStyle(
             color: Colors.white,
-            fontSize: 60,
+            fontSize: 80,
           ),
           bodyText1: TextStyle(
             color: Colors.white,
@@ -23,7 +23,7 @@ void main() {
           ),
           bodyText2: TextStyle(
             color: Colors.white,
-            fontSize: 30,
+            fontSize: 40,
           ),
         ),
       ),
